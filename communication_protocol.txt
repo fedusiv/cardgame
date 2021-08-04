@@ -1,0 +1,47 @@
+MessageType:
+LOGIN = 1
+Request server to login
+
+To server:
+{
+    "type" : 1,
+    "body" : 
+    {
+        "login" : login_string,
+        "password" : password_string
+    }
+}
+
+To client:
+{
+    "type" : 1,
+    "body" :
+    {
+        "result" : result_bool
+        "message" : message_string ( if result True, message empty, because authorization is ok, if result False there is a error messsage)
+        "uuid" : str (unique id of player)
+    }
+}
+
+
+MessageType:
+CLIENT_DATA = 2
+To server:
+{
+    "type" : 2,
+    "body" :
+    {
+    },
+    "uuid": str (unique uuid of player)
+}
+
+To client:
+{
+    "type" : 2,
+    "body" :
+    {
+        "login" : str (login name)
+        "cards" : [str] (list of cards id available for player)
+    }
+}
+
