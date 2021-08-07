@@ -29,3 +29,11 @@ class CommunicationPrepare:
         }
         msg_json = CommunicationPrepare.formulate_message(body, MessageType.LOGIN.value)
         return msg_json
+
+    @staticmethod
+    def create_search_game_ack(result: bool):
+        body = {
+            "result" : result
+        }
+        msg_json = CommunicationPrepare.formulate_message(body, MessageType.SEARCH_GAME.value)
+        return msg_json

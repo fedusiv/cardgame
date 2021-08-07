@@ -45,3 +45,22 @@ To client:
     }
 }
 
+MessageType:
+SEARCH_GAME = 3
+To server:
+{
+    "type" : 3,
+    "body" :
+    {
+    },
+    "uuid": str (unique uuid of player)
+}
+
+To client:
+{
+    "type" : 3,
+    "body" :
+    {
+        "result" : bool
+    }
+}

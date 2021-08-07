@@ -6,7 +6,7 @@ import tornado.options
 from client.client_handler import ClientHandler
 import config
 from database.database import DataBase
-from server_logic import ServerLogic
+from logic.server_logic import ServerLogic
 
 
 class Server(tornado.web.Application):
@@ -19,6 +19,7 @@ class Server(tornado.web.Application):
         self.database = DataBase.instance()
         # Init main logic loop
         self.server_logic = ServerLogic.instance()
+        self.server_logic.send_io_loop(self.io_loop)
         self.io_loop.spawn_callback(self.server_logic.logic_loop)
 
 

@@ -4,6 +4,7 @@ from client.client_data import ClientData
 from communication.communication_parser import CommunicationParser
 from communication.communication_prepare import CommunicationPrepare
 from communication.communication_types import MessageType
+from logic.server_logic_queue import ServerLogicQueue
 
 
 class ClientOperation:
@@ -12,6 +13,7 @@ class ClientOperation:
 
     def __init__(self, ws: tornado.websocket.WebSocketHandler):
         self.ws: tornado.websocket.WebSocketHandler = ws
+        self.logic_queue = ServerLogicQueue.instance()
         self.is_logged = False
 
     def login_request(self,message: CommunicationParser):
@@ -20,8 +22,12 @@ class ClientOperation:
         self.is_logged = True
         CommunicationPrepare.create_login_result_msg(True, "a1")
 
-    def search_game_request(self):
-        pass
+    def search_game_request(self, msg):
+        # Put element
+        self.logic_queue.put_element(msg)
+        # Inform client, that he is on search queue
+        msg = CommunicationPrepare.create_search_game_ack(True)
+        self.ws.write_mesage(msg)
 
     # Send client data by request
     def client_data_request(self):
@@ -37,7 +43,7 @@ class ClientOperation:
             MessageType.SEARCH_GAME: self.search_game_request
         }
         function = switcher.get(msg.msg_type, self.empty_error_react)
-        function()
+        function(msg)
 
     def read_message(self, message: CommunicationParser):
         if self.is_logged:
