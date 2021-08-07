@@ -37,3 +37,9 @@ class CommunicationPrepare:
         }
         msg_json = CommunicationPrepare.formulate_message(body, MessageType.SEARCH_GAME.value)
         return msg_json
+
+    @staticmethod
+    def game_started_notify():
+        body = {}
+        msg_json = CommunicationPrepare.formulate_message(body, MessageType.GAME_STARTED.value)
+        return msg_json

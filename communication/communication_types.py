@@ -7,5 +7,6 @@ class MessageType(Enum):
     LOGIN = 1
     CLIENT_DATA = 2
     SEARCH_GAME = 3
+    GAME_STARTED = 4
 
 

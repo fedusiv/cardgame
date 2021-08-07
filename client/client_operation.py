@@ -20,7 +20,12 @@ class ClientOperation:
         print("Logged client: " + message.login)
         self.client_data = ClientData("a1")
         self.is_logged = True
-        CommunicationPrepare.create_login_result_msg(True, "a1")
+        msg = CommunicationPrepare.create_login_result_msg(True, "a1")
+        self.ws.write_mesage(msg)
+
+    def game_started_notify(self):
+        msg = CommunicationPrepare.game_started_notify()
+        self.ws.write_mesage(msg)
 
     def search_game_request(self, msg):
         # Put element

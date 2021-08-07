@@ -1,6 +1,7 @@
 from tornado import gen
 import tornado.ioloop
 
+from client.clients_handler import ClientsHandler
 from communication.communication_parser import CommunicationParser
 from communication.communication_types import MessageType
 from logic.server_logic_queue import ServerLogicQueue
@@ -27,6 +28,8 @@ class ServerLogic:
         self.game_sessions = []
         # create empty loop
         self.io_loop = None
+        # clients handler - module to operate with clients
+        self.clients_handler = ClientsHandler.instance()
 
     def send_io_loop(self, io_loop: tornado.ioloop.IOLoop):
         self.io_loop = io_loop
@@ -41,7 +44,8 @@ class ServerLogic:
             player1 = self.search_list.pop()
             player2 = self.search_list.pop()
             # Create game session
-            game_session = GameSession(player1, player2)
+            game_session = GameSession(self.clients_handler.get_client_handler(player1),
+                                       self.clients_handler.get_client_handler(player2))
             self.game_sessions.append(game_session)
             # Start session
             self.io_loop.spawn_callback(game_session.main_loop)
@@ -51,7 +55,7 @@ class ServerLogic:
             while self.logic_queue.empty() is False:
                 msg: CommunicationParser = self.logic_queue.get_element()
                 switcher = {
-                    MessageType.SEARCH_GAME : self.logic_queue
+                    MessageType.SEARCH_GAME: self.logic_queue
                 }
                 function = switcher.get(msg.msg_type)
                 function(msg)

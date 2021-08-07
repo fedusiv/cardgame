@@ -64,3 +64,11 @@ To client:
         "result" : bool
     }
 }
+
+MessageType:
+GAME_STARTED = 4
+To client:
+{
+    "type" : 4,
+    "body" : {}
+}
