@@ -17,8 +17,10 @@ class ClientsHandler:
     def append_client(self, client: ClientOperation):
         self.clients_dict = {client.client_data.uuid: client}
 
-    def remove_client(self, client_uuid: str):
-        self.clients_dict.pop(client_uuid)
+    def remove_client(self, client: ClientOperation):
+        if client.client_data is None:
+            return
+        self.clients_dict.pop(client.client_data.uuid)
 
     def get_client_handler(self, client_uuid: str):
         return self.clients_dict.get(client_uuid)

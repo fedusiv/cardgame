@@ -9,20 +9,22 @@ class CommunicationParser:
     login: str
     password: str
 
-    def __init__(self, msg):
-        self.msg = msg
+    def __init__(self, message):
+        self.msg = message
         if not self.verify_msg():
             return None
-        self.msg_body = msg["body"]
+        self.msg_body = self.msg["body"]
         self.msg_type = MessageType((self.msg["type"]))
         if self.msg_type is not MessageType.LOGIN:
             # Read uuid right here
-            self.uuid = msg["uuid"]
-        return self
+            self.uuid = self.msg["uuid"]
+        self.parse_client_message()
 
     def verify_msg(self):
-        message = json.loads(self.msg)
-        if message is not None:
+        self.msg = json.loads(self.msg)
+        print(self.msg)
+        print(type(self.msg))
+        if self.msg is not None:
             return True
         return False
 

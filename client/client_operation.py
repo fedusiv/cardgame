@@ -1,4 +1,5 @@
 import tornado
+import tornado.websocket
 
 from client.client_data import ClientData
 from communication.communication_parser import CommunicationParser
@@ -11,17 +12,17 @@ class ClientOperation:
 
     client_data: ClientData
 
-    def __init__(self, ws: tornado.websocket.WebSocketHandler):
-        self.ws: tornado.websocket.WebSocketHandler = ws
+    def __init__(self, wsh: tornado.websocket.WebSocketHandler):
+        self.ws: tornado.websocket.WebSocketHandler = wsh
         self.logic_queue = ServerLogicQueue.instance()
         self.is_logged = False
 
-    def login_request(self,message: CommunicationParser):
+    def login_request(self, message: CommunicationParser):
         print("Logged client: " + message.login)
         self.client_data = ClientData("a1")
         self.is_logged = True
         msg = CommunicationPrepare.create_login_result_msg(True, "a1")
-        self.ws.write_mesage(msg)
+        self.ws.write_message(msg)
 
     def game_started_notify(self):
         msg = CommunicationPrepare.game_started_notify()
