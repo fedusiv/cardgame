@@ -7,6 +7,7 @@ from client.client_handler import ClientHandler
 import config
 from database.database import DataBase
 from logic.server_logic import ServerLogic
+from cards.card_pool import CardPool
 
 
 class Server(tornado.web.Application):
@@ -17,6 +18,7 @@ class Server(tornado.web.Application):
         self.io_loop = io_loop
         # Init database
         self.database = DataBase.instance()
+        self.card_pool = CardPool.instance()    # card pool is also kind of database
         # Init main logic loop
         self.server_logic = ServerLogic.instance()
         self.server_logic.send_io_loop(self.io_loop)

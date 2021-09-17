@@ -1,0 +1,13 @@
+{
+  "amount": 1,
+  "creatures": [
+    {
+      "id": 1,
+      "name" : "Zmeevik",
+      "type" : "1_1",
+      "damage" : 1,
+      "health" : 8,
+      "cost" : 6
+    }
+  ]
+}
