@@ -1,4 +1,5 @@
-from openpyxl import load_workbook
+from cards.card_pool_builder import CardPoolBuilder
+
 
 class CardPool:
     # Singleton part
@@ -12,23 +13,11 @@ class CardPool:
 
     def __init__(self):
         CardPool.__instance = self
+        self.card_pool_dict = {}
+        self.builder = CardPoolBuilder()
         self.parse_db()
 
-    # Parsing part
-    row_start_index = 2
-    column_id = 'A'
-    column_card_type = 'B'
-    column_name = 'C'
-    column_price = 'D'
     def parse_db(self):
-        wb = load_workbook(filename='cards_description/graveyard.xlsx')
-        sheet_deck = wb["Deck"]
-        rows_amount = sheet_deck.max_row - 1    # -1 because one row is used for description
-        for r in range(self.row_start_index, self.row_start_index+rows_amount):
-            self.parse_row(r, sheet_deck)
-
-    def parse_row(self, row_id, sheet_deck):
-        card_id = sheet_deck[self.column_id+str(row_id)].value
-        name = sheet_deck[self.column_name+str(row_id)].value
-
-
+        graveyard_list = self.builder.build_from_excel("cards_description/graveyard.xlsx")
+        for card in graveyard_list:
+            self.card_pool_dict[card.id] = card
