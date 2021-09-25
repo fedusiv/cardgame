@@ -15,7 +15,7 @@ from database.database import DataBase
 class ClientHandler(tornado.websocket.WebSocketHandler):
 
     # Class fields
-    #operation: ClientOperation  # Client operation module
+    operation: ClientOperation  # Client operation module
     handler: ClientsHandler  # Where all clients connected right now are stored
     in_handler = False
 

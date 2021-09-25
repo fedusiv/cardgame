@@ -15,15 +15,10 @@ class CommunicationParser:
             return None
         self.msg_body = self.msg["body"]
         self.msg_type = MessageType((self.msg["type"]))
-        if self.msg_type is not MessageType.LOGIN:
-            # Read uuid right here
-            self.uuid = self.msg["uuid"]
         self.parse_client_message()
 
     def verify_msg(self):
         self.msg = json.loads(self.msg)
-        print(self.msg)
-        print(type(self.msg))
         if self.msg is not None:
             return True
         return False

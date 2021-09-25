@@ -31,8 +31,7 @@ To server:
     "type" : 2,
     "body" :
     {
-    },
-    "uuid": str (unique uuid of player)
+    }
 }
 
 To client:
@@ -41,7 +40,7 @@ To client:
     "body" :
     {
         "login" : str (login name)
-        "cards" : [str] (list of cards id available for player)
+        "cards" : {} (dictionary, key - unique id of card, value - amount)
     }
 }
 
@@ -52,8 +51,7 @@ To server:
     "type" : 3,
     "body" :
     {
-    },
-    "uuid": str (unique uuid of player)
+    }
 }
 
 To client:
