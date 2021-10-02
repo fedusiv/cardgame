@@ -23,9 +23,11 @@ class ClientOperation:
         uuid = self.database.login_request(message.login, message.password)
         if uuid is not None:
             print("Logged client: " + message.login)
+            # Obtain client's info from database
             self.client_data = ClientData(uuid)
             self.client_data.login_name = message.login
             self.client_data.card_dict = self.database.get_client_cards(uuid)
+            self.client_data.card_decks = self.database.get_client_decks(uuid)
             self.is_logged = True
         else:
             uuid = ""
@@ -45,7 +47,8 @@ class ClientOperation:
 
     # Send client data by request
     def client_data_request(self, msg):
-        msg = CommunicationPrepare.client_data_msg(self.client_data.login_name, self.client_data.card_dict)
+        msg = CommunicationPrepare.client_data_msg(self.client_data.login_name,
+                                                   self.client_data.card_dict, self.client_data.card_decks)
         self.ws.write_message(msg)
 
     def react_on_message(self, msg: CommunicationParser):

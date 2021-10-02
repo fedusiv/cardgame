@@ -36,3 +36,9 @@ class DataBase:
             cards = data[uuid]["cards"]
         return cards
 
+    def get_client_decks(self, uuid):
+        decks = []
+        data = self.table_client_data_json
+        if data[uuid] is not None:
+            decks = data[uuid]["decks"]
+        return decks

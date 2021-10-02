@@ -41,6 +41,11 @@ To client:
     {
         "login" : str (login name)
         "cards" : {} (dictionary, key - unique id of card, value - amount)
+        "decks" :
+        [
+            "name" : name
+            "cards" : {}
+        ]
     }
 }
 

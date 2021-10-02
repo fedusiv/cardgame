@@ -12,10 +12,11 @@ class CommunicationPrepare:
         return msg_json
 
     @staticmethod
-    def client_data_msg(login: str, cards: list):
+    def client_data_msg(login: str, cards: list, card_decks: list):
         body = {
             "login": login,
-            "cards": cards
+            "cards": cards,
+            "decks": card_decks
         }
         msg_json = CommunicationPrepare.formulate_message(body, MessageType.CLIENT_DATA.value)
         return msg_json

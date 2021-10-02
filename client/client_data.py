@@ -4,3 +4,4 @@ class ClientData:
         self.login_name = ""
         self.uuid = uuid
         self.card_dict = {}
+        self.card_decks = []    # One deck looks like card_dict
