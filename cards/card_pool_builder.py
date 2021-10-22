@@ -25,16 +25,17 @@ class CardPoolBuilder:
     column_id = 'A'
     column_card_type = 'B'
     column_name = 'C'
-    column_price = 'D'
+    column_cost_action = 'D'
+    column_cost_mana = 'E'
 
     def parse_row(self, row_id, sheet_deck):
         # Card type parsing
         card_type: CardObjType
         card_type_str = sheet_deck[self.column_card_type + str(row_id)].value
-        if card_type_str == "Creature":
-            card_type = CardObjType.Creature
-        elif card_type_str == "Deck":
-            card_type = CardObjType.Deck
+        if card_type_str == "Mana":
+            card_type = CardObjType.Mana
+        elif card_type_str == "Spell":
+            card_type = CardObjType.Spell
         else:
             # Type of object is unspecified, do not parse it
             return None
@@ -44,7 +45,8 @@ class CardPoolBuilder:
         # Name of card
         name = sheet_deck[self.column_name + str(row_id)].value
         # Price
-        price = sheet_deck[self.column_price + str(row_id)].value
-        card = CardObj(card_id, name, price, card_type)
+        cost_action = sheet_deck[self.column_cost_action + str(row_id)].value
+        cost_mana = sheet_deck[self.column_cost_mana + str(row_id)].value
+        card = CardObj(card_id, name, cost_action, cost_mana, card_type)
         return card
 

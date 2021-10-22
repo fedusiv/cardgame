@@ -18,6 +18,6 @@ class CardPool:
         self.parse_db()
 
     def parse_db(self):
-        graveyard_list = self.builder.build_from_excel("cards_description/graveyard.xlsx")
-        for card in graveyard_list:
+        card_list = self.builder.build_from_excel("cards_description/cards.xlsx")
+        for card in card_list:
             self.card_pool_dict[card.id] = card
